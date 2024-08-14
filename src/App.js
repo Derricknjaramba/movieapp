@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import GenreFilter from './components/GenreFilter';
 import SearchBar from './components/SearchBar';
 import MovieList from './components/MovieList';
-import { fetchMovies, fetchGenres } from './api';
+import GenreFilter from './components/GenreFilter';
+
+const API_KEY = '7b49e7fcd0433cc86dce34f3001aa965';
+const API_URL = 'https://api.themoviedb.org/3';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -10,29 +12,64 @@ const App = () => {
   const [selectedGenre, setSelectedGenre] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Fetch genres on component mount
+  // Fetch genres from TMDb API
   useEffect(() => {
-    const fetchData = async () => {
-      const genresData = await fetchGenres();
-      setGenres(genresData);
+    const fetchGenres = async () => {
+      try {
+        const response = await fetch(`${API_URL}/genre/movie/list?api_key=${API_KEY}`);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        setGenres(data.genres);
+      } catch (error) {
+        console.error('Fetch genres error:', error);
+      }
     };
-    fetchData();
+    fetchGenres();
   }, []);
 
-  // Fetch movies whenever the genre or search query changes
+  // Fetch movies based on search query
   useEffect(() => {
-    const fetchMoviesData = async () => {
-      console.log('Fetching movies with:', { selectedGenre, searchQuery });
-      const moviesData = await fetchMovies(selectedGenre, searchQuery);
-      console.log('Fetched movies:', moviesData);
-      setMovies(moviesData);
+    const fetchMovies = async () => {
+      try {
+        const queryParam = searchQuery ? `&query=${encodeURIComponent(searchQuery)}` : '';
+        const url = `${API_URL}/search/movie?api_key=${API_KEY}&sort_by=popularity.desc${queryParam}`;
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        setMovies(data.results);
+      } catch (error) {
+        console.error('Fetch movies error:', error);
+        setMovies([]);
+      }
     };
-    fetchMoviesData();
-  }, [selectedGenre, searchQuery]);
+
+    fetchMovies();
+  }, [searchQuery]);
+
+  // Fetch movies based on selected genre
+  useEffect(() => {
+    const fetchMoviesByGenre = async () => {
+      if (!selectedGenre) return;
+      try {
+        const url = `${API_URL}/discover/movie?api_key=${API_KEY}&with_genres=${selectedGenre}&sort_by=popularity.desc`;
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        setMovies(data.results);
+      } catch (error) {
+        console.error('Fetch movies by genre error:', error);
+        setMovies([]);
+      }
+    };
+
+    fetchMoviesByGenre();
+  }, [selectedGenre]);
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Movie App</h1>
+      <h1 className="text-3xl font-bold mb-4">Movie Search App</h1>
       <SearchBar query={searchQuery} onQueryChange={setSearchQuery} />
       <GenreFilter genres={genres} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre} />
       <MovieList movies={movies} />
@@ -41,6 +78,30 @@ const App = () => {
 };
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

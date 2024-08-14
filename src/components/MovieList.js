@@ -7,13 +7,33 @@ const MovieList = ({ movies }) => {
       {movies.length > 0 ? (
         movies.map(movie => <MovieCard key={movie.id} movie={movie} />)
       ) : (
-        <p>No movies found</p>
+        <p className="col-span-full text-center text-gray-500">No movies found</p>
       )}
     </div>
   );
 };
 
 export default MovieList;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

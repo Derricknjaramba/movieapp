@@ -7,12 +7,36 @@ const SearchBar = ({ query, onQueryChange }) => {
       placeholder="Search for movies..."
       value={query}
       onChange={(e) => onQueryChange(e.target.value)}
-      className="border p-2 rounded w-full mb-4"
+      className="border p-2 rounded mb-4 w-full"
     />
   );
 };
 
 export default SearchBar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
