@@ -27,13 +27,17 @@ const App = () => {
     fetchGenres();
   }, []);
 
-  // Fetch movies based on search query
+  // Fetch movies based on search query and selected genre
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const queryParam = searchQuery ? `&query=${encodeURIComponent(searchQuery)}` : '';
-        const url = `${API_URL}/search/movie?api_key=${API_KEY}&sort_by=popularity.desc${queryParam}`;
-
+        let url = `${API_URL}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc`;
+        if (selectedGenre) {
+          url += `&with_genres=${selectedGenre}`;
+        }
+        if (searchQuery) {
+          url = `${API_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(searchQuery)}`;
+        }
         const response = await fetch(url);
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
@@ -45,27 +49,7 @@ const App = () => {
     };
 
     fetchMovies();
-  }, [searchQuery]);
-
-  // Fetch movies based on selected genre
-  useEffect(() => {
-    const fetchMoviesByGenre = async () => {
-      if (!selectedGenre) return;
-      try {
-        const url = `${API_URL}/discover/movie?api_key=${API_KEY}&with_genres=${selectedGenre}&sort_by=popularity.desc`;
-
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        setMovies(data.results);
-      } catch (error) {
-        console.error('Fetch movies by genre error:', error);
-        setMovies([]);
-      }
-    };
-
-    fetchMoviesByGenre();
-  }, [selectedGenre]);
+  }, [searchQuery, selectedGenre]);
 
   return (
     <div className="container mx-auto p-4">
@@ -78,6 +62,7 @@ const App = () => {
 };
 
 export default App;
+
 
 
 
