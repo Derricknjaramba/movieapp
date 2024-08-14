@@ -3,7 +3,7 @@ import AuthenticationForm from './components/AuthenticationForm';
 import SearchBar from './components/SearchBar';
 import MovieList from './components/MovieList';
 import GenreFilter from './components/GenreFilter';
-import { auth, signOut } from './firebaseConfig'; // Make sure these are correctly imported
+import { auth, signOut } from './firebaseConfig'; // Ensure these are correctly imported
 
 const API_KEY = '7b49e7fcd0433cc86dce34f3001aa965';
 const API_URL = 'https://api.themoviedb.org/3';
@@ -81,16 +81,16 @@ const App = () => {
           {showAuthForm === 'login' || showAuthForm === 'register' ? (
             <AuthenticationForm setShowAuthForm={setShowAuthForm} />
           ) : (
-            <div>
+            <div className="flex space-x-4 mb-4">
               <button
                 onClick={() => setShowAuthForm('login')}
-                className="bg-blue-500 text-white p-2 rounded mr-2"
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
               >
                 Login
               </button>
               <button
                 onClick={() => setShowAuthForm('register')}
-                className="bg-green-500 text-white p-2 rounded"
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
               >
                 Sign Up
               </button>
@@ -98,13 +98,18 @@ const App = () => {
           )}
         </div>
       ) : (
-        <div>
+        <div className="flex items-center justify-between mb-4">
           <button
             onClick={handleLogout}
-            className="bg-red-500 text-white p-2 rounded mb-4"
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300 ml-auto"
           >
             Logout
           </button>
+        </div>
+      )}
+
+      {isAuthenticated && (
+        <div>
           <SearchBar query={searchQuery} onQueryChange={setSearchQuery} />
           <GenreFilter genres={genres} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre} />
           <MovieList movies={movies} />
@@ -115,6 +120,8 @@ const App = () => {
 };
 
 export default App;
+
+
 
 
 
