@@ -1,15 +1,14 @@
-// src/components/GenreFilter.js
 import React from 'react';
 
-const GenreFilter = ({ genres, selectedGenre, setSelectedGenre }) => {
+const GenreFilter = ({ genres, selectedGenre, onGenreChange }) => {
   return (
     <select
       value={selectedGenre}
-      onChange={(e) => setSelectedGenre(e.target.value)}
-      className="p-2 border border-gray-300 rounded-lg"
+      onChange={(e) => onGenreChange(e.target.value)}
+      className="border p-2 rounded mb-4"
     >
       <option value="">All Genres</option>
-      {genres.map((genre) => (
+      {genres.map(genre => (
         <option key={genre.id} value={genre.id}>
           {genre.name}
         </option>
@@ -19,6 +18,36 @@ const GenreFilter = ({ genres, selectedGenre, setSelectedGenre }) => {
 };
 
 export default GenreFilter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,19 +1,45 @@
-// src/components/SearchBar.js
 import React from 'react';
 
-const SearchBar = ({ query, setQuery }) => {
+const SearchBar = ({ query, onQueryChange }) => {
   return (
     <input
       type="text"
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
       placeholder="Search for movies..."
-      className="p-2 border border-gray-300 rounded-lg w-full"
+      value={query}
+      onChange={(e) => onQueryChange(e.target.value)}
+      className="border p-2 rounded w-full mb-4"
     />
   );
 };
 
 export default SearchBar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
