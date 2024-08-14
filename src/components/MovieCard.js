@@ -22,7 +22,9 @@ const MovieCard = ({ movie }) => {
         </p>
         <button
           onClick={() => setShowFullOverview(!showFullOverview)}
-          className="text-blue-500 hover:text-blue-700 mt-2"
+          className={`text-yellow-600 hover:text-yellow-800 mt-2 ${
+            showFullOverview ? 'text-yellow-600' : 'text-yellow-400'
+          }`}
         >
           {showFullOverview ? 'Read Less' : 'Read More'}
         </button>
@@ -34,6 +36,7 @@ const MovieCard = ({ movie }) => {
 };
 
 export default MovieCard;
+
 
 
 

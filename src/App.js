@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import AuthenticationForm from './components/AuthenticationForm';
 import SearchBar from './components/SearchBar';
 import MovieList from './components/MovieList';
 import GenreFilter from './components/GenreFilter';
+import { auth, signOut } from './firebaseConfig'; // Make sure these are correctly imported
 
 const API_KEY = '7b49e7fcd0433cc86dce34f3001aa965';
 const API_URL = 'https://api.themoviedb.org/3';
@@ -11,6 +13,16 @@ const App = () => {
   const [genres, setGenres] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showAuthForm, setShowAuthForm] = useState(''); // 'login' or 'register'
+
+  useEffect(() => {
+    // Check authentication state
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setIsAuthenticated(!!user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Fetch genres from TMDb API
   useEffect(() => {
@@ -51,17 +63,61 @@ const App = () => {
     fetchMovies();
   }, [searchQuery, selectedGenre]);
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      alert('Logout successful!');
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Movie Search App</h1>
-      <SearchBar query={searchQuery} onQueryChange={setSearchQuery} />
-      <GenreFilter genres={genres} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre} />
-      <MovieList movies={movies} />
+
+      {!isAuthenticated ? (
+        <div>
+          {showAuthForm === 'login' || showAuthForm === 'register' ? (
+            <AuthenticationForm setShowAuthForm={setShowAuthForm} />
+          ) : (
+            <div>
+              <button
+                onClick={() => setShowAuthForm('login')}
+                className="bg-blue-500 text-white p-2 rounded mr-2"
+              >
+                Login
+              </button>
+              <button
+                onClick={() => setShowAuthForm('register')}
+                className="bg-green-500 text-white p-2 rounded"
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div>
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white p-2 rounded mb-4"
+          >
+            Logout
+          </button>
+          <SearchBar query={searchQuery} onQueryChange={setSearchQuery} />
+          <GenreFilter genres={genres} selectedGenre={selectedGenre} onGenreChange={setSelectedGenre} />
+          <MovieList movies={movies} />
+        </div>
+      )}
     </div>
   );
 };
 
 export default App;
+
+
+
 
 
 
