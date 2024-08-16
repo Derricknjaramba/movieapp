@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+                    Movie Finder Application
+                        Overview
+The Movie Finder application is designed to address common issues users face when searching for movie information. It provides a user-friendly interface for searching movies, viewing detailed information, and managing user authentication. The application features various components to enhance the user experience, including authentication forms, genre filtering, movie cards, and search functionality.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+                    Features
+User Authentication: Allows users to register, log in, and manage their accounts. Includes functionality for password reset and logout.
+Search Functionality: Enables users to search for movies by title and filter results by genre.
+Movie Details: Displays comprehensive information about each movie, including posters, ratings, and overviews.
+Responsive Design: Fully responsive design for optimal viewing on desktops, tablets, and mobile phones.
+                Components
+AuthenticationForm
 
-## Available Scripts
+Handles user authentication, including login, registration, password reset, and logout.
+Provides error handling and feedback messages.
+GenreFilter
 
-In the project directory, you can run:
+Allows users to filter movies by genre.
+Provides a dropdown menu for selecting genres.
+MovieCard
 
-### `npm start`
+Displays movie details such as title, poster, overview, rating, and release date.
+Includes functionality to toggle between a truncated and full overview of the movie.
+MovieList
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Renders a list of MovieCard components in a responsive grid layout.
+Displays a message when no movies are found.
+SearchBar
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Provides a search input field for users to search for movies by title.
+                Technology Stack
+Frontend:
+React: JavaScript library for building interactive user interfaces.
+Tailwind CSS: Utility-first CSS framework for designing a modern and responsive UI.
+Firebase: Used for authentication and user management.
