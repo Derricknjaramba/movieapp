@@ -5,6 +5,7 @@ const MovieCard = ({ movie }) => {
   const { title, poster_path, release_date, overview, vote_average, id } = movie;
   const [trailer, setTrailer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
 
   useEffect(() => {
     const fetchTrailer = async () => {
@@ -29,6 +30,10 @@ const MovieCard = ({ movie }) => {
     setIsModalOpen(false);
   };
 
+  const handleToggleOverview = () => {
+    setIsOverviewExpanded(!isOverviewExpanded);
+  };
+
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
       <img
@@ -39,8 +44,16 @@ const MovieCard = ({ movie }) => {
       <div className="p-4">
         <h3 className="text-xl font-semibold mb-1">{title}</h3>
         <p className="text-gray-600 mb-2">{release_date}</p>
-        <p className="text-gray-800 mb-2">{overview.length > 150 ? `${overview.substring(0, 150)}...` : overview}</p>
-        <div className="flex items-center mb-2">
+        <p className="text-gray-800 mb-2">
+          {isOverviewExpanded ? overview : `${overview.substring(0, 150)}...`}
+        </p>
+        <button
+          onClick={handleToggleOverview}
+          className="text-blue-500 underline"
+        >
+          {isOverviewExpanded ? 'Read Less' : 'Read More'}
+        </button>
+        <div className="flex items-center mb-2 mt-2">
           <span className="text-yellow-500 mr-1">⭐</span>
           <span className="font-semibold">{vote_average}</span>
         </div>
@@ -65,6 +78,7 @@ const MovieCard = ({ movie }) => {
 };
 
 export default MovieCard;
+
 
 
 
