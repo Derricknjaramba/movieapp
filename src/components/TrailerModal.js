@@ -1,32 +1,46 @@
-import React from 'react';
+// TrailerModal.js
+import React, { useRef, useEffect } from 'react';
 
 const TrailerModal = ({ isOpen, onClose, trailerKey }) => {
-  if (!isOpen) return null;
+  const modalRef = useRef(null);
 
-  const handleClickOutside = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
+  // Close the modal if a click is detected outside the modal content
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
     }
-  };
+  }, [isOpen, onClose]);
+
+  if (!isOpen || !trailerKey) return null;
 
   return (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-      onClick={handleClickOutside}
-    >
-      <div className="bg-white p-4 rounded-lg relative max-w-3xl w-full">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+      <div
+        ref={modalRef}
+        className="bg-white p-4 rounded-lg relative"
+      >
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+          className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
         >
           &times;
         </button>
         <iframe
-          className="w-full h-60"
-          src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+          width="560"
+          height="315"
+          src={`https://www.youtube.com/embed/${trailerKey}`}
           title="Trailer"
           frameBorder="0"
-          allow="autoplay; encrypted-media"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
       </div>
@@ -35,5 +49,30 @@ const TrailerModal = ({ isOpen, onClose, trailerKey }) => {
 };
 
 export default TrailerModal;
-;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
