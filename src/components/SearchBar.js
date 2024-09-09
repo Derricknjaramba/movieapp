@@ -1,22 +1,19 @@
 import React from 'react';
 
 const SearchBar = ({ query, onQueryChange }) => {
-  const handleChange = (e) => {
-    onQueryChange(e.target.value);
-  };
-
   return (
     <input
       type="text"
-      placeholder="Search for movies or TV shows..."
       value={query}
-      onChange={handleChange}
-      className="border p-2 rounded mb-4 w-full"
+      onChange={(e) => onQueryChange(e.target.value)}
+      placeholder="Search..."
+      className="w-full p-2 border border-gray-300 rounded"
     />
   );
 };
 
 export default SearchBar;
+
 
 
 

@@ -1,4 +1,3 @@
-// TVSeriesCard.js
 import React, { useState, useEffect } from 'react';
 
 const TVSeriesCard = ({ tvShow, onPlayTrailer }) => {
@@ -23,7 +22,7 @@ const TVSeriesCard = ({ tvShow, onPlayTrailer }) => {
 
   const handlePlayTrailer = () => {
     if (trailer) {
-      onPlayTrailer(trailer.key);
+      onPlayTrailer(trailer.key, 'tv');
     }
   };
 
@@ -39,37 +38,39 @@ const TVSeriesCard = ({ tvShow, onPlayTrailer }) => {
         alt={name}
       />
       <div className="p-4">
-        <h3 className="text-xl font-semibold mb-1">{name}</h3>
-        <p className="text-gray-600 mb-2">{first_air_date}</p>
-        <p className="text-gray-800 mb-2">
-          {isOverviewExpanded ? overview : `${overview.substring(0, 150)}...`}
+        <h2 className="text-xl font-bold">{name}</h2>
+        <p className="text-gray-600">{first_air_date}</p>
+        <p className="text-gray-800 mt-2">
+          Rating: {vote_average ? vote_average.toFixed(1) : 'N/A'}
         </p>
-        <div className="flex flex-col space-y-2">
+        <div className="mt-2">
+          <p className={`overflow-hidden ${isOverviewExpanded ? 'block' : 'truncate'}`}>
+            {overview}
+          </p>
           <button
             onClick={handleToggleOverview}
-            className="text-blue-500 underline"
+            className="text-blue-500 underline mt-2"
           >
             {isOverviewExpanded ? 'Show Less' : 'Show More'}
           </button>
-          {trailer && (
-            <button
-              onClick={handlePlayTrailer}
-              className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-            >
-              Watch Trailer
-            </button>
-          )}
         </div>
-        <div className="flex items-center mb-2 mt-2">
-          <span className="text-yellow-500 mr-1">⭐</span>
-          <span className="font-semibold">{vote_average}</span>
-        </div>
+        <button
+          onClick={handlePlayTrailer}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-2"
+        >
+          Watch Trailer
+        </button>
       </div>
     </div>
   );
 };
 
 export default TVSeriesCard;
+
+
+
+
+
 
 
 

@@ -20,6 +20,7 @@ const App = () => {
   const [showAuthForm, setShowAuthForm] = useState('');
   const [currentTab, setCurrentTab] = useState('movies');
   const [trailerKey, setTrailerKey] = useState(null);
+  const [trailerType, setTrailerType] = useState(''); // 'movie' or 'tv'
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -74,6 +75,9 @@ const App = () => {
         if (selectedGenre) {
           url += `&with_genres=${selectedGenre}`;
         }
+        if (searchQuery) {
+          url = `${API_URL}/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(searchQuery)}`;
+        }
         const response = await fetch(url);
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
@@ -88,7 +92,7 @@ const App = () => {
     if (currentTab === 'tvShows') {
       fetchTVShows();
     }
-  }, [selectedGenre, currentTab]);
+  }, [searchQuery, selectedGenre, currentTab]);
 
   const handleLogout = async () => {
     try {
@@ -99,12 +103,14 @@ const App = () => {
     }
   };
 
-  const handlePlayTrailer = (trailerKey) => {
+  const handlePlayTrailer = (trailerKey, type) => {
     setTrailerKey(trailerKey);
+    setTrailerType(type);
   };
 
   const handleCloseTrailer = () => {
     setTrailerKey(null);
+    setTrailerType('');
   };
 
   const handleTabChange = (tab) => {
@@ -179,6 +185,7 @@ const App = () => {
           isOpen={!!trailerKey}
           onClose={handleCloseTrailer}
           trailerKey={trailerKey}
+          trailerType={trailerType}
         />
       )}
     </div>
@@ -186,6 +193,9 @@ const App = () => {
 };
 
 export default App;
+
+
+
 
 
 
